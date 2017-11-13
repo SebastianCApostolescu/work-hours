@@ -9,7 +9,8 @@ class App extends Component {
 					<h1 className="App-title">Check your working hours!</h1>
 				</header>
 				<div className="App-intro">
-					To get started, edit <code>src/App.js</code> and save to reload.
+					Firebase API key:
+					<code>{process.env.REACT_APP_FIREBASE_APIKEY}</code>.
 				</div>
 			</div>
 		)
