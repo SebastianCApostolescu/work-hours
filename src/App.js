@@ -1,20 +1,17 @@
-import React, { Component } from 'react'
-import './styles/App.css'
+import React from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-class App extends Component {
-	render() {
-		return (
-			<div className="App">
-				<header className="App-header">
-					<h1 className="App-title">Check your working hours!</h1>
-				</header>
-				<div className="App-intro">
-					Firebase API key:
-					<code>{process.env.REACT_APP_FIREBASE_APIKEY}</code>.
-				</div>
-			</div>
-		)
-	}
+import Home from './views/Home'
+
+const App = () => {
+	return (
+		<BrowserRouter>
+			<Switch>
+				<Route exact path="/" component={Home} />
+				<Route component={() => <div>Not Found</div>} />
+			</Switch>
+		</BrowserRouter>
+	)
 }
 
 export default App
