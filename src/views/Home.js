@@ -9,15 +9,23 @@ class Home extends Component {
 		super(props)
 		this.state = {
 			user: null,
-			loggedIn: false
+			loggedIn: false,
+			loading: true
 		}
 	}
-	componentWillMount() {
+	componentDidMount() {
 		auth.onAuthStateChanged(user => {
 			if (user) {
 				this.setState({
 					user: user,
-					loggedIn: true
+					loggedIn: true,
+					loading: false
+				})
+			} else {
+				this.setState({
+					user: null,
+					loggedIn: false,
+					loading: false
 				})
 			}
 		})
@@ -45,6 +53,9 @@ class Home extends Component {
 	}
 
 	render() {
+		if (this.state.loading === true) {
+			return <div>Loading...</div>
+		}
 		return (
 			<div className="App">
 				<Header
