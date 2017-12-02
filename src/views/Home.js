@@ -4,6 +4,16 @@ import Main from '../components/main'
 
 import firebase, { auth, provider } from '../firebase'
 
+import CircularProgress from 'material-ui/CircularProgress'
+
+const styles = {
+	spinner: {
+		position: 'absolute',
+		left: '50%',
+		top: '20%'
+	}
+}
+
 class Home extends Component {
 	constructor(props) {
 		super(props)
@@ -54,7 +64,7 @@ class Home extends Component {
 
 	render() {
 		if (this.state.loading === true) {
-			return <div>Loading...</div>
+			return <CircularProgress size={60} style={styles.spinner} />
 		}
 		return (
 			<div className="App">
@@ -67,6 +77,7 @@ class Home extends Component {
 					loggedIn={this.state.loggedIn}
 					handleLogin={this.login}
 					handleLogout={this.logout}
+					user={this.state.user}
 				/>
 				<Main
 					loggedIn={this.state.loggedIn}
