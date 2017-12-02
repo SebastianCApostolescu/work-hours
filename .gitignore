@@ -22,3 +22,7 @@ yarn-error.log*
 
 src/**/*.css
 .env
+
+.firebaserc
+database.rules.json
+firebase.json

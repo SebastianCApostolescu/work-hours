@@ -4,8 +4,9 @@ import RaisedButton from 'material-ui/RaisedButton'
 import LogginButton from './loginButton'
 
 const styles = {
-	button: {
-		marginTop: 6
+	app: {
+		paddingRight: 50,
+		paddingLeft: 50
 	}
 }
 
@@ -15,6 +16,7 @@ class Header extends Component {
 			<header className="App-header">
 				<AppBar
 					showMenuIconButton={false}
+					style={styles.app}
 					title={this.props.text}
 					iconElementRight={
 						this.props.loggedIn ? (
