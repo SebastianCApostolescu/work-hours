@@ -80,14 +80,19 @@ class App extends Component {
 
 	login = () => {
 		console.log('login')
-		auth.signInWithPopup(provider).then(result => {
-			const user = result.user
-			console.log(user)
-			this.setState({
-				user: user,
-				authed: true
+		auth
+			.signInWithPopup(provider)
+			.then(result => {
+				const user = result.user
+				console.log(user)
+				this.setState({
+					user: user,
+					authed: true
+				})
 			})
-		})
+			.catch(error => {
+				console.log('Something went wrong: ', error.message)
+			})
 	}
 
 	logout = () => {
