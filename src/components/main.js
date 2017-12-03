@@ -6,9 +6,9 @@ class Main extends Component {
 		return (
 			<main className="container">
 				<div>
-					{!this.props.loggedIn &&
+					{!this.props.authed &&
 						'Hey Stranger... In order to use this app you need to Login with your Google Account'}
-					{this.props.loggedIn && 'Welcome'}
+					{this.props.authed && 'Welcome'}
 				</div>
 			</main>
 		)
