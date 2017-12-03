@@ -124,11 +124,15 @@ class App extends Component {
 								<PublicRoute
 									authed={this.state.authed}
 									path="/login"
-									component={Login}
+									component={props => (
+										<Login {...props} handleLogin={this.login} />
+									)}
 								/>
 								<PrivateRoute
 									authed={this.state.authed}
-									component={Dashboard}
+									component={props => (
+										<Dashboard {...props} user={this.state.user} />
+									)}
 								/>
 								<Route component={() => <div>Not Found</div>} />
 							</Switch>

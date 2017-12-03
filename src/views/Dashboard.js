@@ -3,7 +3,7 @@ import '../styles/materialize-grid.css'
 
 class Dashboard extends Component {
 	render() {
-		return <div className="container">Private Section</div>
+		return <div className="container">Private {this.props.test} </div>
 	}
 }
 

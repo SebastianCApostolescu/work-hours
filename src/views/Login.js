@@ -19,7 +19,7 @@ const styles = {
 class Login extends Component {
 	render() {
 		return (
-			<div className="App">
+			<div className="container">
 				<RaisedButton
 					label="Login"
 					style={styles.button}
