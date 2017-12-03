@@ -3,7 +3,7 @@ import Main from '../components/main'
 
 class Home extends Component {
 	render() {
-		return <div className="container">Home Component</div>
+		return <div>Home Component</div>
 	}
 }
 

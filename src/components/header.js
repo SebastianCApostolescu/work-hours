@@ -13,7 +13,7 @@ const styles = {
 class Header extends Component {
 	render() {
 		return (
-			<header className="App-header">
+			<header>
 				<AppBar
 					showMenuIconButton={false}
 					style={styles.app}

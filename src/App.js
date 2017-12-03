@@ -3,13 +3,14 @@ import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import CircularProgress from 'material-ui/CircularProgress'
+import './styles/materialize-grid.css'
 
 import Home from './views/Home'
 import Login from './views/Login'
 import Dashboard from './views/Dashboard'
 import Header from './components/header'
 
-import firebase, { auth, provider } from './firebase'
+import { auth, provider } from './firebase'
 
 const styles = {
 	spinner: {
@@ -87,6 +88,7 @@ class App extends Component {
 				user: user,
 				authed: true
 			})
+			window.location.href = '/dashboard'
 		})
 	}
 
@@ -109,33 +111,32 @@ class App extends Component {
 					<BrowserRouter>
 						<div>
 							<Header
-								text={
-									!this.state.user
-										? 'Please Login Stranger'
-										: `Welcome ${this.state.user.displayName}`
-								}
+								text={<Link to="/">Work Hours</Link>}
 								loggedIn={this.state.authed}
 								handleLogin={this.login}
 								handleLogout={this.logout}
 								user={this.state.user}
 							/>
-							<Switch>
-								<Route exact path="/" component={Home} />
-								<PublicRoute
-									authed={this.state.authed}
-									path="/login"
-									component={props => (
-										<Login {...props} handleLogin={this.login} />
-									)}
-								/>
-								<PrivateRoute
-									authed={this.state.authed}
-									component={props => (
-										<Dashboard {...props} user={this.state.user} />
-									)}
-								/>
-								<Route component={() => <div>Not Found</div>} />
-							</Switch>
+							<div className="container">
+								<Switch>
+									<Route exact path="/" component={Home} />
+									<PublicRoute
+										authed={this.state.authed}
+										path="/login"
+										component={props => (
+											<Login {...props} handleLogin={this.login} />
+										)}
+									/>
+									<PrivateRoute
+										path="/dashboard"
+										authed={this.state.authed}
+										component={props => (
+											<Dashboard {...props} user={this.state.user} />
+										)}
+									/>
+									<Route component={() => <div>Not Found</div>} />
+								</Switch>
+							</div>
 						</div>
 					</BrowserRouter>
 				)}

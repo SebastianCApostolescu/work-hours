@@ -19,13 +19,12 @@ const styles = {
 class Login extends Component {
 	render() {
 		return (
-			<div className="container">
-				<RaisedButton
-					label="Login"
-					style={styles.button}
-					onClick={this.props.handleLogin}
-				/>
-			</div>
+			<button
+				className="loginBtn loginBtn--google"
+				onClick={this.props.handleLogin}
+			>
+				Login
+			</button>
 		)
 	}
 }
