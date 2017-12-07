@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import AppBar from 'material-ui/AppBar'
-import RaisedButton from 'material-ui/RaisedButton'
 import LogginButton from './loginButton'
 
 const styles = {
@@ -13,7 +12,7 @@ const styles = {
 class Header extends Component {
 	render() {
 		return (
-			<header className="App-header">
+			<header>
 				<AppBar
 					showMenuIconButton={false}
 					style={styles.app}
