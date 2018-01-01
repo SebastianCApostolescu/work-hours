@@ -58,11 +58,6 @@ function PublicRoute({ component: Component, authed, ...rest }) {
 }
 
 class App extends Component {
-  state = {
-    user: null,
-    authed: false,
-    loading: true
-  }
   componentDidMount() {
     this.removeListener = auth.onAuthStateChanged(user => {
       if (user) {
@@ -84,74 +79,90 @@ class App extends Component {
     this.removeListener()
   }
 
-  login = () => {
-    console.log('login')
-    auth
-      .signInWithPopup(provider)
-      .then(result => {
-        const user = result.user
-        console.log(user)
-        this.setState({
-          user: user,
-          authed: true
-        })
-      })
-      .catch(error => {
-        console.log('Something went wrong: ', error.message)
-      })
-    window.location.href = '/dashboard'
-  }
+  // login = () => {
+  // 	console.log('login')
+  // 	auth.signInWithPopup(provider).then(result => {
+  // 		const user = result.user
+  // 		console.log(user)
+  // 		this.setState({
+  // 			user: user,
+  // 			authed: true
+  // 		})
+  // 		window.location.href = '/dashboard'
+  // 	})
+  // }
 
-  logout = () => {
-    console.log('logout')
-    auth.signOut().then(() => {
-      this.setState({
-        user: null,
-        authed: false
-      })
-    })
-  }
+  // logout = () => {
+  // 	console.log('logout')
+  // 	auth.signOut().then(() => {
+  // 		this.setState({
+  // 			user: null,
+  // 			authed: false
+  // 		})
+  // 	})
+  // }
 
   render() {
     return (
       <MuiThemeProvider>
-        {this.state.loading ? (
-          <CircularProgress size={60} style={styles.spinner} />
-        ) : (
-          <BrowserRouter>
-            <div>
-              <Header
-                text={<Link to="/">Work Hours</Link>}
-                loggedIn={this.state.authed}
-                handleLogin={this.login}
-                handleLogout={this.logout}
-                user={this.state.user}
-              />
-              <div className="container">
-                <Switch>
-                  <Route exact path="/" component={Home} />
-                  <PublicRoute
-                    authed={this.state.authed}
-                    path="/login"
-                    component={props => (
-                      <Login {...props} handleLogin={this.login} />
-                    )}
-                  />
-                  <PrivateRoute
-                    path="/dashboard"
-                    authed={this.state.authed}
-                    component={props => (
-                      <Dashboard {...props} user={this.state.user} />
-                    )}
-                  />
-                  <Route component={() => <div>Not Found</div>} />
-                </Switch>
+        <Provider store={store}>
+          {this.state.loading ? (
+            <CircularProgress size={60} style={styles.spinner} />
+          ) : (
+            <BrowserRouter>
+              <div>
+                <Header
+                  text={<Link to="/">Work Hours</Link>}
+                  loggedIn={this.state.authed}
+                  handleLogin={this.login}
+                  handleLogout={this.logout}
+                  user={this.state.user}
+                />
+                <div className="container">
+                  <Switch>
+                    <Route exact path="/" component={Home} />
+                    <PublicRoute
+                      authed={this.state.authed}
+                      path="/login"
+                      component={props => (
+                        <Login {...props} handleLogin={this.login} />
+                      )}
+                    />
+                    <PrivateRoute
+                      path="/dashboard"
+                      authed={this.state.authed}
+                      component={props => (
+                        <Dashboard {...props} user={this.state.user} />
+                      )}
+                    />
+                    <Route component={() => <div>Not Found</div>} />
+                  </Switch>
+                </div>
               </div>
-            </div>
-          </BrowserRouter>
-        )}
+            </BrowserRouter>
+          )}
+        </Provider>
       </MuiThemeProvider>
     )
   }
 }
-export default App
+
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    authed: state.authed,
+    loading: state.loading
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    login: user => {
+      dispatch(login(user))
+    },
+    logout: () => {
+      dispatch(logout())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
