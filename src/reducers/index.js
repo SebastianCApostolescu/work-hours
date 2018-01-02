@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
-import auth from './numberReducer'
+import auth from './authReducer'
 
 export default combineReducers({
-	auth
-	// todos,
-	// drawer
+  auth
+  // todos,
+  // drawer
 })

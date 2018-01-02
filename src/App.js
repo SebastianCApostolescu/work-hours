@@ -11,9 +11,7 @@ import Dashboard from './views/Dashboard'
 import Header from './components/header'
 
 import { connect } from 'react-redux'
-import { login, logout } from './actions/authActions'
-import { Provider } from 'react-redux'
-import store from './store'
+import { loginAction, logoutAction, setUserAction } from './actions/authActions'
 
 import { auth, provider } from './firebase'
 
@@ -59,19 +57,12 @@ function PublicRoute({ component: Component, authed, ...rest }) {
 
 class App extends Component {
   componentDidMount() {
+    const { setUser, logout } = this.props
     this.removeListener = auth.onAuthStateChanged(user => {
       if (user) {
-        this.setState({
-          user: user,
-          authed: true,
-          loading: false
-        })
+        setUser(user)
       } else {
-        this.setState({
-          user: null,
-          authed: false,
-          loading: false
-        })
+        logout()
       }
     })
   }
@@ -79,69 +70,43 @@ class App extends Component {
     this.removeListener()
   }
 
-  // login = () => {
-  // 	console.log('login')
-  // 	auth.signInWithPopup(provider).then(result => {
-  // 		const user = result.user
-  // 		console.log(user)
-  // 		this.setState({
-  // 			user: user,
-  // 			authed: true
-  // 		})
-  // 		window.location.href = '/dashboard'
-  // 	})
-  // }
-
-  // logout = () => {
-  // 	console.log('logout')
-  // 	auth.signOut().then(() => {
-  // 		this.setState({
-  // 			user: null,
-  // 			authed: false
-  // 		})
-  // 	})
-  // }
-
   render() {
+    const { authed, user, loading, login, logout } = this.props
     return (
       <MuiThemeProvider>
-        <Provider store={store}>
-          {this.state.loading ? (
-            <CircularProgress size={60} style={styles.spinner} />
-          ) : (
-            <BrowserRouter>
-              <div>
-                <Header
-                  text={<Link to="/">Work Hours</Link>}
-                  loggedIn={this.state.authed}
-                  handleLogin={this.login}
-                  handleLogout={this.logout}
-                  user={this.state.user}
-                />
-                <div className="container">
-                  <Switch>
-                    <Route exact path="/" component={Home} />
-                    <PublicRoute
-                      authed={this.state.authed}
-                      path="/login"
-                      component={props => (
-                        <Login {...props} handleLogin={this.login} />
-                      )}
-                    />
-                    <PrivateRoute
-                      path="/dashboard"
-                      authed={this.state.authed}
-                      component={props => (
-                        <Dashboard {...props} user={this.state.user} />
-                      )}
-                    />
-                    <Route component={() => <div>Not Found</div>} />
-                  </Switch>
-                </div>
+        {loading ? (
+          <CircularProgress size={60} style={styles.spinner} />
+        ) : (
+          <BrowserRouter>
+            <div>
+              <Header
+                text={<Link to="/">Work Hours</Link>}
+                loggedIn={authed}
+                handleLogin={login}
+                handleLogout={logout}
+                user={user}
+              />
+              <div className="container">
+                <Switch>
+                  <Route exact path="/" component={Home} />
+                  <PublicRoute
+                    authed={authed}
+                    path="/login"
+                    component={props => (
+                      <Login {...props} handleLogin={login} />
+                    )}
+                  />
+                  <PrivateRoute
+                    path="/dashboard"
+                    authed={authed}
+                    component={props => <Dashboard {...props} user={user} />}
+                  />
+                  <Route component={() => <div>Not Found</div>} />
+                </Switch>
               </div>
-            </BrowserRouter>
-          )}
-        </Provider>
+            </div>
+          </BrowserRouter>
+        )}
       </MuiThemeProvider>
     )
   }
@@ -149,18 +114,30 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
-    authed: state.authed,
-    loading: state.loading
+    user: state.auth.user,
+    authed: state.auth.authed,
+    loading: state.auth.loading
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    login: user => {
-      dispatch(login(user))
+    login: () => {
+      console.log('login')
+      auth.signInWithPopup(provider).then(result => {
+        const user = result.user
+        console.log(user)
+        dispatch(loginAction(user))
+        window.location.href = '/dashboard'
+      })
     },
     logout: () => {
-      dispatch(logout())
+      console.log('logout')
+      auth.signOut().then(() => {
+        dispatch(logoutAction())
+      })
+    },
+    setUser: user => {
+      dispatch(setUserAction(user))
     }
   }
 }
