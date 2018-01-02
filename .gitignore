@@ -26,3 +26,5 @@ src/**/*.css
 .firebaserc
 database.rules.json
 firebase.json
+
+*.log
