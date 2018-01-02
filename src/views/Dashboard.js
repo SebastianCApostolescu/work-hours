@@ -7,50 +7,65 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table'
+import DatePicker from 'material-ui/DatePicker'
+import TimePicker from 'material-ui/TimePicker'
+
 import { connect } from 'react-redux'
 import { loginAction, logoutAction } from '../actions/authActions'
 
 import { auth, provider, db } from '../firebase'
 
 const Dashboard = ({ user }) => {
-  const items = db.ref(`users/${user.uid}/items`)
+  // const items = db.ref(`users/${user.uid}/items`)
   return (
-    <Table selectable={false}>
-      <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-        <TableRow>
-          <TableHeaderColumn>ID</TableHeaderColumn>
-          <TableHeaderColumn>Name</TableHeaderColumn>
-          <TableHeaderColumn>Status</TableHeaderColumn>
-        </TableRow>
-      </TableHeader>
-      <TableBody displayRowCheckbox={false}>
-        <TableRow>
-          <TableRowColumn>1</TableRowColumn>
-          <TableRowColumn>John Smith</TableRowColumn>
-          <TableRowColumn>Employed</TableRowColumn>
-        </TableRow>
-        <TableRow>
-          <TableRowColumn>2</TableRowColumn>
-          <TableRowColumn>Randal White</TableRowColumn>
-          <TableRowColumn>Unemployed</TableRowColumn>
-        </TableRow>
-        <TableRow>
-          <TableRowColumn>3</TableRowColumn>
-          <TableRowColumn>Stephanie Sanders</TableRowColumn>
-          <TableRowColumn>Employed</TableRowColumn>
-        </TableRow>
-        <TableRow>
-          <TableRowColumn>4</TableRowColumn>
-          <TableRowColumn>Steve Brown</TableRowColumn>
-          <TableRowColumn>Employed</TableRowColumn>
-        </TableRow>
-        <TableRow>
-          <TableRowColumn>5</TableRowColumn>
-          <TableRowColumn>Christopher Nolan</TableRowColumn>
-          <TableRowColumn>Unemployed</TableRowColumn>
-        </TableRow>
-      </TableBody>
-    </Table>
+    <div>
+      <div>
+        <div>
+          Inicio del Turno: <DatePicker hintText="Portrait Dialog" />
+          <TimePicker format="24hr" hintText="24hr Format" />
+        </div>
+        <div>
+          Fin del Turno: <DatePicker hintText="Portrait Dialog" />
+          <TimePicker format="24hr" hintText="24hr Format" />
+        </div>
+      </div>
+      <Table selectable={false}>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+          <TableRow>
+            <TableHeaderColumn>ID</TableHeaderColumn>
+            <TableHeaderColumn>Name</TableHeaderColumn>
+            <TableHeaderColumn>Status</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false}>
+          <TableRow>
+            <TableRowColumn>1</TableRowColumn>
+            <TableRowColumn>John Smith</TableRowColumn>
+            <TableRowColumn>Employed</TableRowColumn>
+          </TableRow>
+          <TableRow>
+            <TableRowColumn>2</TableRowColumn>
+            <TableRowColumn>Randal White</TableRowColumn>
+            <TableRowColumn>Unemployed</TableRowColumn>
+          </TableRow>
+          <TableRow>
+            <TableRowColumn>3</TableRowColumn>
+            <TableRowColumn>Stephanie Sanders</TableRowColumn>
+            <TableRowColumn>Employed</TableRowColumn>
+          </TableRow>
+          <TableRow>
+            <TableRowColumn>4</TableRowColumn>
+            <TableRowColumn>Steve Brown</TableRowColumn>
+            <TableRowColumn>Employed</TableRowColumn>
+          </TableRow>
+          <TableRow>
+            <TableRowColumn>5</TableRowColumn>
+            <TableRowColumn>Christopher Nolan</TableRowColumn>
+            <TableRowColumn>Unemployed</TableRowColumn>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </div>
   )
 }
 const mapStateToProps = state => {
