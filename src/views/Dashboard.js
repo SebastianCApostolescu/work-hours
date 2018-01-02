@@ -19,14 +19,32 @@ const Dashboard = ({ user }) => {
   // const items = db.ref(`users/${user.uid}/items`)
   return (
     <div>
-      <div>
-        <div>
-          Inicio del Turno: <DatePicker hintText="Portrait Dialog" />
-          <TimePicker format="24hr" hintText="24hr Format" />
+      <div style={{ display: 'inline-block' }}>
+        <div
+          className="turn-start"
+          style={{ display: 'inline-flex', alignItems: 'baseline' }}
+        >
+          Inicio del Turno:
+          <div className="pickers" style={{ display: 'inline-flex' }}>
+            <DatePicker
+              style={{ margin: '0 5px 0 5px' }}
+              hintText="Portrait Dialog"
+            />
+            <TimePicker format="24hr" hintText="24hr Format" />
+          </div>
         </div>
-        <div>
-          Fin del Turno: <DatePicker hintText="Portrait Dialog" />
-          <TimePicker format="24hr" hintText="24hr Format" />
+        <div
+          className="turn-end"
+          style={{ display: 'inline-flex', alignItems: 'baseline' }}
+        >
+          Fin del Turno:
+          <div className="pickers" style={{ display: 'inline-flex' }}>
+            <DatePicker
+              style={{ margin: '0 5px 0 5px' }}
+              hintText="Portrait Dialog"
+            />
+            <TimePicker format="24hr" hintText="24hr Format" />
+          </div>
         </div>
       </div>
       <Table selectable={false}>

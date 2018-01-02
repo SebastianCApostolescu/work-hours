@@ -2,6 +2,8 @@ import React from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import Avatar from 'material-ui/Avatar'
 
+import { Link } from 'react-router-dom'
+
 const styles = {
   root: {
     display: 'inline-flex'
@@ -21,7 +23,9 @@ const loginButton = ({ loggedIn, handleLogin, handleLogout, logged, user }) => (
   <div>
     {logged ? (
       <div style={styles.root}>
-        <Avatar style={styles.avatar} src={user.photoURL} />
+        <Link to="/dashboard">
+          <Avatar style={styles.avatar} src={user.photoURL} />{' '}
+        </Link>
         <div style={{ height: '100%' }}>
           <RaisedButton
             label="Logout"

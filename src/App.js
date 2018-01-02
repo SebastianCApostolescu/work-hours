@@ -86,7 +86,7 @@ class App extends Component {
                 handleLogout={logout}
                 user={user}
               />
-              <div className="container">
+              <div className="container" style={{ marginTop: '10px' }}>
                 <Switch>
                   <Route exact path="/" component={Home} />
                   <PublicRoute
